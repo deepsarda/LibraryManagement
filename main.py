@@ -152,6 +152,7 @@ def show_main_window(user):
         tk.Button(main_window, text="Add Book", command=show_add_book_window).pack(pady=10)
         tk.Button(main_window, text="Pay Fine", command=show_pay_fine_window).pack(pady=10)
 
+    tk.Button(main_window, text="Return Book", command=lambda: show_return_book_window(user)).pack(pady=10)
     tk.Button(main_window, text="Search/Borrow Books", command=lambda: show_search_books_window(user)).pack(pady=10)
     tk.Button(main_window, text="Logout", command=main_window.destroy).pack(pady=10)
 
@@ -205,6 +206,31 @@ def show_add_book_window():
 
     tk.Button(add_book_window, text="Add Book", command=add_book_to_db).grid(row=len(labels), column=0, columnspan=2, pady=10)
     add_book_window.mainloop()
+
+def show_return_book_window(user):
+    """
+    Displays a window for returning a borrowed book.
+
+    The user can select a book from the list of borrowed books and return it.
+    If the book is returned successfully, a success message is shown, and the window is closed.
+    If there is an error, an error message is shown.
+    """
+
+    return_book_window = tk.Tk()
+    return_book_window.title("Return Book")
+
+    transactions = get_transactions(user['user_id'])
+    if not transactions:
+        tk.Label(return_book_window, text="You have no borrowed books.").pack(pady=10)
+        return_book_window.mainloop()
+        return
+
+    tk.Label(return_book_window, text="Select a book to return:").pack(pady=10)
+    for transaction in transactions:
+        book = get_book_by_id(transaction['book_id'])   
+        tk.Button(return_book_window, text=f"{book['title']} by {book['author']}", command=lambda t=transaction: return_book(t['transaction_id'])).pack(pady=5)
+
+    return_book_window.mainloop()
 
 def show_search_books_window(user):
   
