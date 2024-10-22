@@ -231,9 +231,6 @@ def show_search_books_window(user):
         results = search_books(keyword)
         results_window = tk.Toplevel(search_window)
         results_window.title("Search Results")
-        #Add searchbar for another query
-        tk.Label(search_window, text="Enter keyword:").grid(row=0, column=0, padx=10, pady=10)
-        keyword = tk.Entry(search_window)
         tk.Label(results_window, text=f"Search results for '{keyword}':").grid(row=2, column=0, padx=10, pady=10)
 
         for idx, book in enumerate(results):
