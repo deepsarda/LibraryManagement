@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from user_management import get_user_fine, get_user_id, register_member, authenticate_user, update_user_fine
-from circulation import issue_book, get_transactions
+from circulation import issue_book, get_transactions, return_book
 from catalog_management import search_books, get_book_by_id
 
 def show_login_window():
